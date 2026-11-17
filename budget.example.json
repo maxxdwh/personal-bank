@@ -1,0 +1,39 @@
+{
+  "_readme": "Example budget plan. Copy to budget.json and edit (budget.json is git-ignored). Read by personalbank.budget (page: ./run_budget.sh). Amounts are per month in the account currency. Patterns are case-insensitive regular expressions matched against the counterparty and the description. The first matching category wins. Category kinds: income and skip are ignored, planned is a bill tracked in the checklist, pot counts against a shared pot, fun counts against the person's fun money. For one person, keep a single entry in people and drop the checklist items for the second person.",
+  "people": [
+    {"name": "Sam", "account": "Sam main", "fun_money": 5000, "caps": {"delivery": 1000, "shopping": 1500}},
+    {"name": "Robin", "account": "Robin main", "fun_money": 4000, "caps": {"delivery": 1000, "shopping": 1500}}
+  ],
+  "joint_account": null,
+  "pots": {
+    "joint": {"label": "Groceries & home", "budget": 8000},
+    "travel": {"label": "Travel", "budget": {"Sam": 1000, "Robin": 1000}},
+    "health": {"label": "Health", "budget": {"Sam": 500, "Robin": 500}}
+  },
+  "checklist": [
+    {"person": "Robin", "label": "Share of bills to Sam", "amount": -6000, "day": 1, "from": "2027-01", "match": "PLAN bills", "text": "PLAN bills"},
+    {"person": "Sam", "label": "Robin's share of bills", "amount": 6000, "day": 1, "from": "2027-01", "match": "PLAN bills|Robin"},
+    {"person": "Sam", "label": "Joint account", "amount": -4000, "day": 1, "from": "2027-01", "match": "PLAN joint", "text": "PLAN joint"},
+    {"person": "Robin", "label": "Joint account", "amount": -4000, "day": 1, "from": "2027-01", "match": "PLAN joint", "text": "PLAN joint"},
+    {"person": "Sam", "label": "Savings goal", "amount": -3000, "day": 1, "from": "2027-01", "match": "PLAN savings", "text": "PLAN savings", "goal": true},
+    {"person": "Sam", "label": "Insurance", "amount": -1200, "tolerance": 250, "day": 1, "match": "Acme Insurance"},
+    {"person": "Sam", "label": "Electricity", "amount": -450, "tolerance": 400, "day": 1, "match": "City Power"},
+    {"person": "Sam", "label": "Phone", "amount": -149, "tolerance": 60, "day": 2, "match": "Mobilo"},
+    {"person": "Robin", "label": "Phone", "amount": -149, "tolerance": 60, "day": 2, "match": "Mobilo"},
+    {"person": "Sam", "label": "Internet", "amount": -299, "tolerance": 100, "day": 2, "match": "FiberNet"},
+    {"person": "Sam", "label": "Bank fee", "amount": -39, "tolerance": 15, "day": 15, "match": "Account fee"},
+    {"person": "Sam", "label": "Rent", "amount": -12000, "tolerance": 50, "day": "last_working_day", "match": "^Rent"}
+  ],
+  "categories": [
+    {"key": "salary", "label": "Salary", "kind": "income", "sign": "in", "patterns": ["^salary", "payroll"]},
+    {"key": "internal", "label": "Own transfers", "kind": "skip", "patterns": ["^PLAN ", "Invest (deposit|withdraw)", "^Transfer$", "^Rent\\b"]},
+    {"key": "bills", "label": "Bills", "kind": "planned", "patterns": ["Acme Insurance", "City Power", "FiberNet", "Mobilo", "Account fee"]},
+    {"key": "transport", "label": "Transport", "kind": "planned", "patterns": ["Transit", "Bike rental"]},
+    {"key": "joint", "label": "Groceries & home", "kind": "pot", "patterns": ["Supermarket", "Grocer", "Pet ?shop"]},
+    {"key": "health", "label": "Health", "kind": "pot", "patterns": ["Pharmacy", "Dentist", "Clinic", "Therap"]},
+    {"key": "travel", "label": "Travel", "kind": "pot", "patterns": ["Airlines?", "Hotel\\b", "Booking\\.com", "Car rental"]},
+    {"key": "delivery", "label": "Food delivery", "kind": "fun", "patterns": ["Wolt", "Deliveroo", "Just ?Eat", "Uber ?Eats"]},
+    {"key": "shopping", "label": "Shopping", "kind": "fun", "patterns": ["Department Store", "IKEA", "Marketplace"]},
+    {"key": "subscriptions", "label": "Subscriptions", "kind": "planned", "patterns": ["Netflix", "Spotify", "APPLE\\.COM", "Google ?One"]}
+  ]
+}

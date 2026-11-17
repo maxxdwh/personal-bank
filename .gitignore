@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.db
+*.key
+*.crt
+sessions.json
+config.json
+.env
+*.log
+*.bak
+*.bak2
+*.pem
+pending_*.json
+.venv-*/
+budget.json

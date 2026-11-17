@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(~/.personal-bank/**)",
+      "Edit(~/.personal-bank/**)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(nc *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "Bash(rsync *)",
+      "Bash(gh api *)",
+      "Bash(python3 -c *)",
+      "Bash(pnpm dlx *)",
+      "Bash(npm install *)",
+      "WebFetch",
+      "WebSearch"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": [
+        "~/.personal-bank/private.key",
+        "~/.personal-bank/sessions.json"
+      ]
+    }
+  }
+}
